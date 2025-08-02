@@ -84,7 +84,7 @@ const MalayalamSpeechToText = ({ selectedOption, setSelectedOption }) => {
 
   useEffect(() => {
     // Auto-play audio when a new `voice` URL is set
-    if (retxt && audioRef.current) {
+    if (result && audioRef.current) {
       audioRef.current.load(); // Reload the audio element with the new source
       audioRef.current.play().catch((error) => {
         console.log("Autoplay prevented:", error);
@@ -113,7 +113,7 @@ const MalayalamSpeechToText = ({ selectedOption, setSelectedOption }) => {
   return (
     <div>
       {loader && <PreLoader />}
-      <p>{voice || "Click the button and start speaking in Malayalam"}</p>
+      <p>{retxt || "Click the button and start speaking in Malayalam"}</p>
       {isListening ? (
         <motion.img
           initial={{ scale: 0, rotate: "20deg" }}
