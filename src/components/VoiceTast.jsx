@@ -10,6 +10,7 @@ const MalayalamSpeechToText = ({ selectedOption, setSelectedOption }) => {
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
   const [voice, setVoice] = useState("");
+  const [retxt, seReTxt] = useState("");
   const audioRef = useRef(null); // Reference for the audio element
   const [loader, setLoader] = useState(false);
 
@@ -33,7 +34,8 @@ const MalayalamSpeechToText = ({ selectedOption, setSelectedOption }) => {
 
       const data = await response.json();
       console.log("API Response:", data);
-      setVoice(data.malayalam_scolding);
+      setVoice(data.audio);
+      seReTxt(data.malayalam_scolding);
     } catch (err) {
       console.error("API Error:", err);
       setError(`API Error: ${err.message}`);
@@ -82,7 +84,7 @@ const MalayalamSpeechToText = ({ selectedOption, setSelectedOption }) => {
 
   useEffect(() => {
     // Auto-play audio when a new `voice` URL is set
-    if (voice && audioRef.current) {
+    if (retxt && audioRef.current) {
       audioRef.current.load(); // Reload the audio element with the new source
       audioRef.current.play().catch((error) => {
         console.log("Autoplay prevented:", error);
@@ -141,7 +143,10 @@ const MalayalamSpeechToText = ({ selectedOption, setSelectedOption }) => {
 
       {voice && (
         <audio ref={audioRef} controls onEnded={handleAudioEnd}>
-          <source src={voice} type="audio/mpeg" />
+          <source
+            src={`https://ulp-1.onrender.com/${voice}`}
+            type="audio/mpeg"
+          />
         </audio>
       )}
     </div>
